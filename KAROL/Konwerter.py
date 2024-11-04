@@ -33,7 +33,7 @@ def clear_table(df):
 
     return df
 
-st.title('Strona konwertująca plik Excel wygenerowany z ERP w formacie .xls lub .xlsx')
+st.title('Strona konwertująca plik Excel wygenerowany z ERP')
 file_1 = st.file_uploader('Wybierz plik Excel do wyświetlenia:')
 if file_1 is not None:
     df_1 = pd.read_excel(file_1)
@@ -52,4 +52,6 @@ if file_1 is not None:
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 else:
-    st.warning("Prześlij plk Excel wygenerowany z ERP")
+    st.warning("Prześlij plk Excel wygenerowany z ERP w formacie .xls lub .xlsx")
+
+st.markdown('<div style="text-align: right;">Powered by Radosław Krupa</div>', unsafe_allow_html=True)
