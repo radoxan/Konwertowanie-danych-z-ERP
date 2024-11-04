@@ -33,7 +33,7 @@ def clear_table(df):
 
     return df
 
-st.title('Strona konwertująca plik Excel wygenerowany z ERP:')
+st.title('Strona konwertująca plik Excel wygenerowany z ERP w formacie .xls lub .xlsx')
 file_1 = st.file_uploader('Wybierz plik Excel do wyświetlenia:')
 if file_1 is not None:
     df_1 = pd.read_excel(file_1)
