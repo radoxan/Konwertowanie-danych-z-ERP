@@ -60,7 +60,7 @@ def check_length(length):
     elif length <= 1000:
         return 'l_500_-_1000'
     elif length <= 1500:
-        return 'l_1000_-_1500'
+        return 'l_1001_-_1500'
     elif length <= 2000:
         return 'l_1501_-_2000'
     elif length <= 3000:
@@ -68,23 +68,28 @@ def check_length(length):
     elif length <= 4100:
         return 'l_3001_-_4100'
     elif length <= 6000:
-        return 'l_4101_-_6000'                
+        return 'l_4101_-_6000'            
     else:
         return 'Element zbyt długi'
 
 # Funkcja sprawdza czy wprowadzona ilość jest równa "1", zwraca "Prawda" lub "Fałsz"
 def if_one_bend(bend_nums):
     if bend_nums == '1' :
-        return 'Prawda'
+        return 'PRAWDA'
     else:
-        return 'Fałsz'
+        return 'FAŁSZ'
 
 # Z warości True lub False zwraca wartość tekstową "Prawda" lub "Fałsz"
 def true_false(t_or_f):
     if t_or_f:
-        return "Prawda"
+        return "PRAWDA"
     else:
-        return "Fałsz"
+        return "FAŁSZ"
+
+# Przyjmuje Dataframe oraz wartość, zwraca przefiltrowany Dataframe
+def filter_df(df, column_name, column_value):
+    filtered_df = df[df[f'{column_name}'] == column_value]
+    return filtered_df
 
 col1, col2 =st.columns(2)
 with col1:
@@ -119,35 +124,60 @@ with col2:
 col1, col2 = st.columns(2)
 with col1:
     tool_exchange = st.checkbox('Czy detal wymaga innego zazbrojenia maszyny niż standardowe')
+    tool_exchange = true_false(tool_exchange)
 with col2:
     st.write(true_false(tool_exchange))
 
-col1D, col2D = st.columns(2)
+with col1:
+    over_12 = st.checkbox('Czy detal waży więcej niż 12kg?')
+    over_12 = true_false(over_12)
+with col2:
+    st.write(true_false(over_12))
+
 with col1:
     side = st.checkbox('Czy detal jest burtą')
+    side = true_false(side)
 with col2:
     st.write(true_false(side))
 
-col1, col2 = st.columns(2)
 with col1:
     schroder = st.checkbox('Czy detal jest gięty na Schroder')
+    schroder = true_false(schroder)
 with col2:
     st.write(true_false(schroder))
 
-col1, col2 = st.columns(2)
 with col1:
     henra = st.checkbox('Czy detal jest z Henry')
+    henra = true_false(henra)
 with col2:
     st.write(true_false(henra))
 
-col1, col2 = st.columns(2)
 with col1:
     special = st.checkbox('Czy detal jest wykonywany na narzędziu specjalnym')
+    special = true_false(special)
 with col2:
     st.write(true_false(special))
 
-col1, col2 = st.columns(2)
 with col1:
     profiled = st.checkbox('Czy detal jest profilowany na Temabend')
+    profiled = true_false(profiled)
 with col2:
     st.write(true_false(profiled))
+
+df_new = filter_df(df2, 'material',material)
+df_new = filter_df(df_new,'radius',radius)
+df_new = filter_df(df_new,'one_bend',one_bend)
+df_new = filter_df(df_new,'tool_exchange',tool_exchange)
+df_new = filter_df(df_new,'over_12',over_12)
+df_new = filter_df(df_new,'side',side)
+df_new = filter_df(df_new,'schroder',schroder)
+df_new = filter_df(df_new,'henra',henra)
+df_new = filter_df(df_new,'special',special)
+df_new = filter_df(df_new, result, 'PRAWDA')
+st.dataframe(df_new)
+
+if len(df_new) == 1:
+    technology = df_new['technology'].iloc[0]
+    st.title(technology)
+else:
+    st.title("Nie dopasowano technologii")
