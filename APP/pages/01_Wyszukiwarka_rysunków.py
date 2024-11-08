@@ -81,47 +81,50 @@ def remove_duplicates(input_list):
             seen.add(item)
     return unique_list
 
-#Bloki elementów Streamlit
-st.header('Wyszukaj wiersze po numerze')
-search_number = st.text_input('Wprowadź numer do wyszukania')
-search_button = st.button('Szukaj')
+col1, col2 = st.columns([2,5])
+with col1:
+    #Bloki elementów Streamlit
+    st.header('Wyszukaj indeks')
+    search_number = st.text_input('Wprowadź numer do wyszukania')
+    search_button = st.button('Szukaj')
 
 
-folder_path = get_file_path_folder(search_number)
-options=list_files_in_directory(folder_path)
-options_cleared_dot = [remove_after_last_dot(option) for option in options]
-options_cleared_sign = [remove_after_last_sign(option_cleared_sign) for option_cleared_sign in options_cleared_dot]
-options_without_duplicates = remove_duplicates(options_cleared_sign)
-fragmet_options = search_by_number_fragment(search_number, options_without_duplicates)
-choosen_draw = st.selectbox("Wybierz jeden z poniższych plików", fragmet_options)
-file_name = f"{choosen_draw}"
-folder_name = file_name.split('.')[0]
-choosen_draw_cleared = choosen_draw.split('_')[0]
-base_name = f"{choosen_draw_cleared}"
-directory = f"{get_file_path_folder(file_name)}"
+    folder_path = get_file_path_folder(search_number)
+    options=list_files_in_directory(folder_path)
+    options_cleared_dot = [remove_after_last_dot(option) for option in options]
+    options_cleared_sign = [remove_after_last_sign(option_cleared_sign) for option_cleared_sign in options_cleared_dot]
+    options_without_duplicates = remove_duplicates(options_cleared_sign)
+    fragmet_options = search_by_number_fragment(search_number, options_without_duplicates)
+    choosen_draw = st.selectbox("Wybierz jeden z poniższych plików", fragmet_options)
+    file_name = f"{choosen_draw}"
+    folder_name = file_name.split('.')[0]
+    choosen_draw_cleared = choosen_draw.split('_')[0]
+    base_name = f"{choosen_draw_cleared}"
+    directory = f"{get_file_path_folder(file_name)}"
 
-# st.write(base_name)
-# st.write(directory)
+    # st.write(base_name)
+    # st.write(directory)
 
-found_files = find_files(base_name, directory)
+    found_files = find_files(base_name, directory)
 
 
-#if found_files:
-#    print("Znalezione pliki:")
-#    for file in found_files:
-#        print(file)
-#else:
-#    print("Nie znaleziono plików.")
+    #if found_files:
+    #    print("Znalezione pliki:")
+    #    for file in found_files:
+    #        print(file)
+    #else:
+    #    print("Nie znaleziono plików.")
 
-# st.write(f"{found_files}")
+    # st.write(f"{found_files}")
 
-sorted_found_files = found_files.sort(reverse=True)
-select_correct = st.radio("Wybierz poprawkę", found_files)
+    sorted_found_files = found_files.sort(reverse=True)
+    select_correct = st.radio("Wybierz poprawkę", found_files)
 
-try:
-    with pdf_viewer(f"{select_correct}"): #Wyświetla rysunek techniczny
-        pdf_viewer(f"{select_correct}")
-except FileNotFoundError:
-    st.write("Nie odnaleziono rysunku.")
+with col2:   
+    try:
+        with pdf_viewer(f"{select_correct}"): #Wyświetla rysunek techniczny
+            pdf_viewer(f"{select_correct}")
+    except FileNotFoundError:
+        st.write("Nie odnaleziono rysunku.")
 
 
