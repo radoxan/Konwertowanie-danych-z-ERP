@@ -124,11 +124,15 @@ with col1:
     sorted_found_files = found_files.sort(reverse=True)
     select_correct = st.radio("Wybierz poprawkę", found_files)
 
+    rebtn = st.button("Dopasuj szerokość PDF")
+    if rebtn:
+        st.rerun()
+
 with col2:   
     try:
-        with pdf_viewer(f"{select_correct}"): #Wyświetla rysunek techniczny
-            pdf_viewer(f"{select_correct}")
+        pdf_viewer(f"{select_correct}", width=None, render_text=True)
     except FileNotFoundError:
         st.write("Nie odnaleziono rysunku.")
+
 
 

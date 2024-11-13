@@ -1,9 +1,6 @@
 import streamlit as st
-import sqlite3
-import pandas as pd
+from streamlit_pdf_viewer import pdf_viewer
 
-# Ustawienie konfiguracji strony
-st.set_page_config(layout='wide')
-
-st.write("tekst")
-st.text_input("Wpisz tekst")
+# Wczytanie pliku PDF
+uploaded_file = "M.pdf"
+pdf_viewer(uploaded_file, width=None)
