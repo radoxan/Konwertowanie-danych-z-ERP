@@ -8,6 +8,10 @@ from streamlit_pdf_viewer import pdf_viewer
 # Po wybraniu szukanej opcji lub wpisaniu pełnego numeru wyświetla szukany rysunek. 
 # Wyświetla także wszystkie odnalezione poprawki danego rysunku. Domyślnie najnowszą.
 
+# Ustawienie konfiguracji strony
+st.set_page_config(layout='wide')
+
+
 # Metoda zwracająca pełną ścieżkę do pliku
 def get_file_path_full(file_name):
     base_path = r"X:\Tech\DOKUMENTACJA W PRODUKCJI"
